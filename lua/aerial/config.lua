@@ -140,6 +140,9 @@ local default_options = {
   -- This can be a filetype map (see :help aerial-filetype-map)
   icons = {},
 
+  -- Callback for custom icon provider.
+  custom_icon_provider = nil,
+
   -- Control which windows and buffers aerial should ignore.
   -- Aerial will not open when these are focused, and existing aerial windows will not be updated
   ignore = {
@@ -585,6 +588,9 @@ end
 local function get_icon_provider()
   if not M.use_icon_provider then -- skip if icon provider not used
     return false
+  end
+  if M.custom_icon_provider ~= nil then
+    return M.custom_icon_provider
   end
   -- prefer mini.icons
   local _, mini_icons = pcall(require, "mini.icons")
